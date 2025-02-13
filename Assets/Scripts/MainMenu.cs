@@ -85,6 +85,10 @@ public class MainMenu : MonoBehaviour
             routine = StartCoroutine(StartGame());
     }
 
+    public void test()
+    {
+        print("bruh");    }
+
     public void QuitGame()
     {
         Debug.Log("User has quit!");
@@ -96,7 +100,7 @@ public class MainMenu : MonoBehaviour
         //AudioManager.instance.FadeOutCurrent();
         crossfade.SetTrigger("start");
         yield return new WaitForSeconds(1.0f);
-        SceneManager.LoadScene("1stScene");
+        SceneManager.LoadScene("TestScene");
         // SceneManager.LoadScene("Cutscene");
         yield return null;
     }
