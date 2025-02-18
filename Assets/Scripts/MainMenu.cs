@@ -98,7 +98,7 @@ public class MainMenu : MonoBehaviour
     IEnumerator StartGame()
     {
         //AudioManager.instance.FadeOutCurrent();
-        crossfade.SetTrigger("start");
+        //crossfade.SetTrigger("start");
         yield return new WaitForSeconds(1.0f);
         SceneManager.LoadScene("TestScene");
         // SceneManager.LoadScene("Cutscene");
