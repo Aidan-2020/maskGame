@@ -91,7 +91,7 @@ public class CameraFollow : MonoBehaviour
         }
         else
         {
-            Target.localPosition = new Vector3(Target.localPosition.x, 6.0f, 0.0f);
+            Target.localPosition = new Vector3(Target.localPosition.x, 5.0f, 0.0f);
         }
 
         // speed multiplier for high Y velocity
