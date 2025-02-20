@@ -24,7 +24,7 @@ public class Player : MonoBehaviour
     const float k_GroundedRadius = .12f; // Radius of the overlap circle to determine if grounded
     public bool m_Grounded;            // Whether or not the player is grounded.
     public bool m_leftGrounded, m_rightGrounded; // Whether or not the player is solidly grounded.
-    private Rigidbody2D m_Rigidbody2D;
+    public Rigidbody2D m_Rigidbody2D;
     public bool m_FacingRight = true;  // For determining which way the player is currently facing.
     private Vector3 velocity = Vector3.zero;
     public float limitFallSpeed = 20f; // Limit fall speed
@@ -95,13 +95,6 @@ public class Player : MonoBehaviour
 
     private bool limitVelOnWallJump = false; //For limit wall jump distance with low fps
     private float limitVelOnWallJumpCooldown = 0.0f;
-
-    // one time events
-    public bool explorer = false;
-    public bool initialFall = false;
-    public bool reya = false;
-    public bool froggy = false;
-    public bool well = false;
 
     public PhysicsMaterial2D slippery, friction;
 
@@ -900,7 +893,7 @@ public class Player : MonoBehaviour
         SceneManager.LoadScene(GetComponent<Spawnpoint>().scene);
         if (GetComponent<Spawnpoint>().scene == "1stScene")
         {
-            initialFall = false;
+           // initialFall = false;
         }
         // SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
         dead = false;

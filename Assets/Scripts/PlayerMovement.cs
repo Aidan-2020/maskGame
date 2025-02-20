@@ -73,6 +73,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 releaseJump = true;
                 Player.controller.jumpCooldown = 0f;
+                Player.controller.m_Rigidbody2D.velocity = new Vector2(Player.controller.m_Rigidbody2D.velocity.x, 0);
             }
 
             if ((Input.GetKeyDown(KeyCode.C) || Input.GetKeyDown(KeyCode.LeftShift) || Input.GetAxisRaw("LeftTrigger") > 0.3) && dash_Unlocked == true)

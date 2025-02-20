@@ -83,15 +83,15 @@ public class CameraFollow : MonoBehaviour
 
         if (canLookDown && Input.GetAxisRaw("Vertical") < -0.5 && !InventoryNavigator.selected) //&& !Input.GetKey(KeyCode.S)
         {
-            Target.localPosition = new Vector3(Target.localPosition.x, -4.0f, 0.0f); //originally -2
+            Target.localPosition = new Vector3(Target.localPosition.x, -6.0f, 0.0f); //originally -2
         }
         else if (Input.GetAxisRaw("Vertical") > 0.5 && !InventoryNavigator.selected) //&& !Input.GetKey(KeyCode.W)
         {
-            Target.localPosition = new Vector3(Target.localPosition.x, 4.0f, 0.0f); //originally 4
+            Target.localPosition = new Vector3(Target.localPosition.x, 12.0f, 0.0f); //originally 4
         }
         else
         {
-            Target.localPosition = new Vector3(Target.localPosition.x, 1.0f, 0.0f);
+            Target.localPosition = new Vector3(Target.localPosition.x, 6.0f, 0.0f);
         }
 
         // speed multiplier for high Y velocity
