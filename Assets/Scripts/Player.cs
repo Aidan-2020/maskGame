@@ -29,7 +29,7 @@ public class Player : MonoBehaviour
     private Vector3 velocity = Vector3.zero;
     public float limitFallSpeed = 20f; // Limit fall speed
     public bool wallSlide_Unlocked = false;
-    public bool doubleJump_Unlocked = false;
+    public bool doubleJump_Unlocked = true;
     public bool specialAttack_Unlocked = false;
     public bool canDoubleJump = false; //If player can double jump
     [SerializeField] private float m_DashForce = 25f;
@@ -133,7 +133,7 @@ public class Player : MonoBehaviour
         {
             controller = this;
             instance = gameObject;
-            DontDestroyOnLoad(gameObject);
+            //DontDestroyOnLoad(gameObject);
         }
     }
 
@@ -786,10 +786,12 @@ public class Player : MonoBehaviour
     {
         if (!invincible && !resetting && !dead)
         {
-           // animator.SetBool("Hit", true);
+            StartCoroutine(MakeInvincible(iFrames));
+            // animator.SetBool("Hit", true);
             // GetComponent<TimeStop>().StopTime(0.05f, 100, 0.1f);
             int integerDamageValue = (int)damage;
-            this.GetComponent<health>().playerHealth -= (integerDamageValue);
+            // this.GetComponent<health>().playerHealth -= (integerDamageValue);
+            this.GetComponent<health>().takeAwayHeart();
             Vector2 damageDir = Vector3.Normalize(transform.position - position) * 60f;
             damageDir.y /= 2f; // reduces vertical knockback
 
@@ -797,14 +799,14 @@ public class Player : MonoBehaviour
             m_Rigidbody2D.AddForce(damageDir * knockBack);
             if (this.GetComponent<health>().playerHealth <= 0 && !dead)
             {
-                StartCoroutine(WaitToDead());
+                //StartCoroutine(WaitToDead());
             }
             else
             {
-                if (!bypassFlash)
-                    GetComponent<SimpleFlash>().Flash(iFrames, 3);
+                //if (!bypassFlash)
+                //    GetComponent<SimpleFlash>().Flash(iFrames, 3);
                 StartCoroutine(Stun(stunDuration));
-                StartCoroutine(MakeInvincible(iFrames));
+              //  StartCoroutine(MakeInvincible(iFrames));
             }
         }
     }
@@ -885,7 +887,7 @@ public class Player : MonoBehaviour
         GetComponent<Attack>().enabled = false;
         yield return new WaitForSecondsRealtime(0.4f);
         m_Rigidbody2D.velocity = new Vector2(0, m_Rigidbody2D.velocity.y);
-        GameObject.Find("Crossfade").GetComponent<Animator>().SetTrigger("start");
+        //GameObject.Find("Crossfade").GetComponent<Animator>().SetTrigger("start");
         //StartCoroutine(am.PitchDown());
         yield return new WaitForSecondsRealtime(0.8f);
       //  AudioManager.instance.PauseCurrent();

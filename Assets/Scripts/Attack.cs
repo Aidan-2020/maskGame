@@ -17,8 +17,8 @@ public class Attack : MonoBehaviour
     public bool canShoot = true;
     private bool shotDuringPause = false;
     public bool isTimeToCheck = false;
-    public ParticleSystem particleAttack;
-    public ParticleSystem particleSpecialAttack;
+   // public ParticleSystem particleAttack;
+    //public ParticleSystem particleSpecialAttack;
 
     Vector2 startPoint, endPoint; // for arrow trajectory calculation
 
@@ -35,7 +35,7 @@ public class Attack : MonoBehaviour
     public float specialMaxCooldown = 10.0f;
     public health playerHealth;
     private int countToHeal = 5;
-    public AudioClip swordClash, specialSound, arrowRelease;
+    //public AudioClip swordClash, specialSound, arrowRelease;
 
 
     private void Awake()
@@ -47,7 +47,7 @@ public class Attack : MonoBehaviour
     void Start()
     {
         currentAttackCheck = attackCheck;
-        particleAttack.transform.position = currentAttackCheck.position;
+       // particleAttack.transform.position = currentAttackCheck.position;
     }
 
     // Update is called once per frame
@@ -73,8 +73,39 @@ public class Attack : MonoBehaviour
                 {
                     currentAttackCheck = topAttackCheck;
                 }
-                particleAttack.transform.position = currentAttackCheck.position;
+                //particleAttack.transform.position = currentAttackCheck.position;
                 canAttack = false;
+                dmgValue = Mathf.Abs(dmgValue);
+                Collider2D[] collidersEnemies = Physics2D.OverlapCircleAll(currentAttackCheck.position, 3.4f);
+
+                //   particleAttack.Play();
+                for (int i = 0; i < collidersEnemies.Length; i++)
+                {
+                    if (collidersEnemies[i].gameObject.tag == "Enemy" && !(ignoredEnemies.Contains(collidersEnemies[i])))
+                    {
+                        if (collidersEnemies[i].transform.position.x - transform.position.x < 0)
+                        {
+                            dmgValue = -dmgValue;
+                        }
+
+                        if (collidersEnemies[i].GetComponent<Enemy>() != null)
+                        {
+                            collidersEnemies[i].GetComponent<Enemy>().ApplyDamage(dmgValue, 1.0f);
+                        }
+                        else if(collidersEnemies[i].GetComponent<breakableWall>() != null)
+                        {
+                            collidersEnemies[i].GetComponent<breakableWall>().ApplyDamage(dmgValue);
+                        }
+
+                        if (specialCooldown < specialMaxCooldown)
+                            specialCooldown += specialMaxCooldown / 4;
+
+
+                        Vector2 damageDir = Vector3.Normalize(transform.position - collidersEnemies[i].transform.position) * 85f;
+                        m_Rigidbody2D.velocity = Vector2.zero;
+                    }
+                    ignoredEnemies.Add(collidersEnemies[i]);
+                }
                 animator.SetBool("IsAttacking", true);
                 StartCoroutine(AttackCooldown());
             }
@@ -155,7 +186,7 @@ public class Attack : MonoBehaviour
                     }
 
                     throwableWeapon.name = "ThrowableWeapon";
-                    Player.controller.PlaySound(arrowRelease);
+                    //Player.controller.PlaySound(arrowRelease);
                 }
                 shootStrength = 0.0f;
                 verticalAim = 0.25f;
@@ -168,13 +199,13 @@ public class Attack : MonoBehaviour
 
             if (Player.controller.specialAttack_Unlocked && specialCooldown >= specialMaxCooldown && Input.GetButton("Special") && shootStrength <= 0.0f)
             {
-                particleSpecialAttack.Play();
+           //     particleSpecialAttack.Play();
                 specialCooldown = 0.0f;
                 animator.SetBool("IsSattacking", true);
                 cam.GetComponent<CameraFollow>().ShakeCamera(0.2f);
                 gameObject.GetComponent<Player>().Invincible(1f);
 
-                Player.controller.PlaySound(specialSound);
+                //Player.controller.PlaySound(specialSound);
             }
             // else if (Input.GetKeyUp(KeyCode.Y) || Input.GetKeyUp("joystick button 3"))
             // {
@@ -209,6 +240,7 @@ public class Attack : MonoBehaviour
         yield return new WaitForSeconds(0.25f);
         ignoredEnemies.Clear();
         canAttack = true;
+        animator.SetBool("IsAttacking", false);
     }
 
     IEnumerator ShootCooldown()
@@ -225,7 +257,7 @@ public class Attack : MonoBehaviour
         dmgValue = Mathf.Abs(dmgValue);
         Collider2D[] collidersEnemies = Physics2D.OverlapCircleAll(currentAttackCheck.position, 1.4f);
 
-        particleAttack.Play();
+     //   particleAttack.Play();
         for (int i = 0; i < collidersEnemies.Length; i++)
         {
             if (collidersEnemies[i].gameObject.tag == "Enemy" && !(ignoredEnemies.Contains(collidersEnemies[i])))
@@ -259,7 +291,7 @@ public class Attack : MonoBehaviour
                 int direction = 0;
                 if (collidersWalls[i].transform.position.x > transform.position.x) { direction = -1; } else { direction = 1; }
                 m_Rigidbody2D.AddForce(new Vector2(direction * 1000f, 0f));
-                Player.controller.PlaySound(swordClash);
+                //Player.controller.PlaySound(swordClash);
                 break;
             }
         }

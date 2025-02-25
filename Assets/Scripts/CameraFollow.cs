@@ -101,7 +101,7 @@ public class CameraFollow : MonoBehaviour
         }
         else
         {
-            speedMultiplierY = 1.0f;
+            speedMultiplierY = 2.0f;
         }
 
         // speed multiplier for high X velocity
@@ -111,7 +111,7 @@ public class CameraFollow : MonoBehaviour
         }
         else
         {
-            speedMultiplierX = 1.0f;
+            speedMultiplierX = 2.0f;
         }
 
         if (!onScreen)

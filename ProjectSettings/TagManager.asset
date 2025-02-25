@@ -8,6 +8,8 @@ TagManager:
   - Reset Point
   - Boundary
   - Wall
+  - Heart
+  - Enemy
   layers:
   - Default
   - TransparentFX
